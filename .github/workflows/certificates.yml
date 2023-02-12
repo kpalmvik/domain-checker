@@ -24,7 +24,7 @@ jobs:
       - name: www.google.com
         run: npm run check-cert www.google.com 25
       - name: www.instabox.se
-        run: npm run check-cert www.sydsvenskan.se 25
+        run: npm run check-cert www.instabox.se 25
       - name: www.sydsvenskan.se
         run: npm run check-cert www.sydsvenskan.se 25
       - name: www.testfreaks.com
