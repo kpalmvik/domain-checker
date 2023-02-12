@@ -6,6 +6,10 @@ describe('checkCert', () => {
 		expect(certStatus).toMatch(/www.example.com is valid for [0-9]{1,4} days/);
 	});
 
+	it('throws an error if the certificate expires in less than a given number of days', async () => {
+		void expect(checkCert('www.example.com', 9999)).rejects.toThrow();
+	});
+
 	it('throws an error for a hostname with an expired certificate', async () => {
 		void expect(checkCert('expired.badssl.com')).rejects.toThrow();
 	});

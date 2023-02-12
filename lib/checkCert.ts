@@ -29,11 +29,22 @@ const getCertificateValidTo = async (hostname: string): Promise<string> =>
 const daysUntil = (timestamp: number) =>
 	Math.floor((timestamp - Date.now()) / millisecondsPerDay);
 
-const checkCert = async (hostname: string) => {
+const checkCert = async (
+	hostname: string,
+	minRemainingDays?: number,
+): Promise<string> => {
 	const certValidTo = await getCertificateValidTo(hostname);
 	const certValidToTimestamp = Date.parse(certValidTo);
 
-	return `${hostname} is valid for ${daysUntil(certValidToTimestamp)} days`;
+	const remainingDays = daysUntil(certValidToTimestamp);
+
+	if (minRemainingDays && remainingDays <= minRemainingDays) {
+		throw new Error(
+			`Valid only for ${remainingDays} days, which is less than the required ${minRemainingDays}`,
+		);
+	}
+
+	return `${hostname} is valid for ${remainingDays} days`;
 };
 
 export {checkCert};
