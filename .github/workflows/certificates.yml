@@ -16,6 +16,8 @@ jobs:
         with:
           node-version: '*'
           cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
       - name: kristofer.palmvik.se
         run: npm run check-cert kristofer.palmvik.se
       - name: expired.badssl.com
