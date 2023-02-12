@@ -1,8 +1,17 @@
+import {checkCert} from './lib/checkCert';
+
 if (process.argv.length === 2) {
-	console.error('Expected at least one argument!');
+	console.error('Usage: npm run check-cert some.example.com');
 	process.exit(1);
 }
 
-console.log(
-	`This function will check the certificate of the domain ${process.argv[2]}`,
-);
+const hostname = process.argv[2];
+
+void checkCert(hostname)
+	.then(result => {
+		console.log(`${hostname}: ${result}`);
+	})
+	.catch((error: Error) => {
+		console.error(`${hostname}: No valid certificate found (${error.message})`);
+		process.exit(1);
+	});
