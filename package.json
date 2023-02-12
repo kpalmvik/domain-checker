@@ -2,8 +2,10 @@
   "name": "domain-checker",
   "version": "1.0.0",
   "description": "Check registration and certificate expiration of domains",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
+    "check-cert": "ts-node-esm check-cert.ts",
+    "check-domain-expiration": "ts-node-esm check-domain-expiration.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +17,11 @@
   "bugs": {
     "url": "https://github.com/kpalmvik/domain-checker/issues"
   },
-  "homepage": "https://github.com/kpalmvik/domain-checker#readme"
+  "homepage": "https://github.com/kpalmvik/domain-checker#readme",
+  "devDependencies": {
+    "@types/node": "^18.13.0",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5"
+  }
 }
