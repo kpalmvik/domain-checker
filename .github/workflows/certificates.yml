@@ -1,0 +1,26 @@
+name: Certificates check 🔐
+
+on:
+  schedule:
+    - cron: '0 9 * * *'
+
+  workflow_dispatch:
+
+jobs:
+  certificates:
+    continue-on-error: true # Continue through all steps even if one check fails
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: current
+          cache: 'npm'
+      - name: kristofer.palmvik.se
+        run: npm run check-cert kristofer.palmvik.se
+      - name: expired.badssl.com
+        run: npm run check-cert expired.badssl.com
+      - name: www.hemnet.se
+        run: npm run check-cert www.hemnet.se
+      - name: www.google.com
+        run: npm run check-cert www.google.com
