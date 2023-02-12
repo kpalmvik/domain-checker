@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: kristofer.palmvik.se
-        run: npm run check-cert kristofer.palmvik.se 365
+        run: npm run check-cert kristofer.palmvik.se 25
       - name: www.hemnet.se
         run: npm run check-cert www.hemnet.se 25
       - name: www.google.com
