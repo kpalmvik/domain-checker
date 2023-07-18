@@ -1,4 +1,4 @@
-import tls, {TLSSocket} from 'tls';
+import tls from 'tls';
 
 const millisecondsPerDay = 1000 * 60 * 60 * 24;
 
