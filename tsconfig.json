@@ -1,6 +1,8 @@
 {
 	"compilerOptions": {
+		"strict": true,
 		"esModuleInterop": true,
-		"strictNullChecks": true
+		"strictNullChecks": true,
+		"forceConsistentCasingInFileNames": true
 	}
 }
