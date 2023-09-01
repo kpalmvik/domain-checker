@@ -21,7 +21,7 @@
 	},
 	"homepage": "https://github.com/kpalmvik/domain-checker#readme",
 	"devDependencies": {
-		"@jest/globals": "^29.6.0",
+		"@jest/globals": "^29.6.4",
 		"@types/jest": "^29.5.3",
 		"@types/node": "^20.4.5",
 		"@typescript-eslint/eslint-plugin": "^6.2.1",
