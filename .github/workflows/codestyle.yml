@@ -8,9 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           cache: 'npm'
+          node-version: latest
       - name: Install modules
         run: npm ci --no-audit --no-fund
       - name: Prettier (code formatting)
