@@ -18,3 +18,5 @@ jobs:
         run: npm run prettier
       - name: ESLint (TypeScript linting)
         run: npm run lint
+      - name: TypeScript
+        run: npm run typecheck

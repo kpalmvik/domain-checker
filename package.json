@@ -8,6 +8,7 @@
 		"check-domain-expiration": "tsx check-domain-expiration.ts",
 		"lint": "npx eslint .",
 		"prettier": "npx prettier --check .",
+		"typecheck": "npx tsc --noEmit --skipLibCheck --project .",
 		"test": "jest"
 	},
 	"repository": {
