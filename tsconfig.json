@@ -3,6 +3,6 @@
 		"strict": true,
 		"esModuleInterop": true,
 		"strictNullChecks": true,
-		"forceConsistentCasingInFileNames": true
-	}
+		"forceConsistentCasingInFileNames": true,
+	},
 }
