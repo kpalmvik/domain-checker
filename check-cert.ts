@@ -12,7 +12,8 @@ void checkCert(hostname, minRemainingDays)
 	.then((result: string) => {
 		console.log(`${hostname}: ${result}`);
 	})
-	.catch((error: Error) => {
-		console.error(`${hostname}: No valid certificate found (${error.message})`);
+	.catch((error: unknown) => {
+		const message = error instanceof Error ? error.message : 'Unknown error';
+		console.error(`${hostname}: No valid certificate found (${message})`);
 		process.exit(1);
 	});

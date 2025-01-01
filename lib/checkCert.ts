@@ -40,11 +40,11 @@ const checkCert = async (
 
 	if (minRemainingDays && remainingDays <= minRemainingDays) {
 		throw new Error(
-			`Valid only for ${remainingDays} days, which is less than the required ${minRemainingDays}`,
+			`Valid only for ${remainingDays.toString()} days, which is less than the required ${minRemainingDays.toString()}`,
 		);
 	}
 
-	return `${hostname} is valid for ${remainingDays} days`;
+	return `${hostname} is valid for ${remainingDays.toString()} days`;
 };
 
 export {checkCert};
