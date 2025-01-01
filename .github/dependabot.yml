@@ -10,3 +10,7 @@ updates:
       time: '03:00'
     reviewers:
       - 'kpalmvik'
+    groups:
+      typescript-eslint:
+        patterns:
+          - '@typescript-eslint/*'
