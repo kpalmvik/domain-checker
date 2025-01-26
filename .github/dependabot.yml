@@ -18,7 +18,7 @@ updates:
           - 'eslint-config-*'
           - '@eslint/*'
           - 'typescript-eslint'
-          - '@typescript-eslint'
+          - '@typescript-eslint/*'
       jest:
         patterns:
           - 'jest'
