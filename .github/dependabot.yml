@@ -11,9 +11,19 @@ updates:
     reviewers:
       - 'kpalmvik'
     groups:
-      typescript-eslint:
+      eslint:
         patterns:
-          - '@typescript-eslint/*'
+          - 'eslint'
+          - 'eslint-plugin-*'
+          - 'eslint-config-*'
+          - '@eslint/*'
+          - 'typescript-eslint'
+      jest:
+        patterns:
+          - 'jest'
+          - '@jest/*'
+          - 'ts-jest'
+          - '@types/jest'
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
