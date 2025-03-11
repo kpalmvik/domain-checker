@@ -22,7 +22,7 @@ jobs:
       - name: www.hemnet.se
         run: npm run check-cert www.hemnet.se 25
       - name: www.google.com
-        run: npm run check-cert www.google.com 20
+        run: npm run check-cert www.google.com 10
       - name: www.sydsvenskan.se
         run: npm run check-cert www.sydsvenskan.se 25
       - name: www.testfreaks.com
