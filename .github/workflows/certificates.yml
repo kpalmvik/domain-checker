@@ -27,5 +27,3 @@ jobs:
         run: npm run check-cert www.sydsvenskan.se 25
       - name: www.testfreaks.com
         run: npm run check-cert www.testfreaks.com 15
-      - name: trustvoice.com
-        run: npm run check-cert trustvoice.com 15
