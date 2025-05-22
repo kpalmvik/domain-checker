@@ -1,14 +1,23 @@
 # domain-checker
 
+This project provides tools to monitor domain name registrations and SSL/TLS certificate validity. It helps ensure that your online services remain accessible and secure by alerting you to upcoming expirations.
+
+Currently, the project offers the following features:
+
+- **SSL/TLS Certificate Expiration Check:** Automated daily checks of SSL/TLS certificates for a configurable list of hostnames. This is integrated with a GitHub Actions workflow for continuous monitoring.
+- **Domain Registration Expiration Check:** (Coming Soon) Functionality to check the expiration dates of domain name registrations.
+
 Check registration and certificate expiration of domains
 
 ## Domain registration
 
-TODO
+This functionality is currently under development. Once implemented, it will allow you to check the expiration dates of your domain name registrations, helping you avoid accidental domain loss.
 
-## Certificates check
+## SSL/TLS Certificate Expiration Check
 
 [![Certificates check 🔐](https://github.com/kpalmvik/domain-checker/actions/workflows/certificates.yml/badge.svg)](https://github.com/kpalmvik/domain-checker/actions/workflows/certificates.yml)
+
+As mentioned in the overview, this project automates the monitoring of SSL/TLS certificate expirations. The primary mechanism for this is a GitHub Actions workflow.
 
 The GitHub Actions workflow [certificates.yml](./.github/workflows/certificates.yml) is scheduled to run daily and check the TLS (SSL) certificate expiration date for a number of hostnames.
 
