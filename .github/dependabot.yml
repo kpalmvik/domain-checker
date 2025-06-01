@@ -8,8 +8,6 @@ updates:
     schedule:
       interval: 'monthly'
       time: '03:00'
-    reviewers:
-      - 'kpalmvik'
     groups:
       eslint:
         patterns:
