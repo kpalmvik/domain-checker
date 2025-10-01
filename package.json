@@ -38,6 +38,6 @@
 		"typescript-eslint": "^8.41.0"
 	},
 	"dependencies": {
-		"tsx": "^4.20.5"
+		"tsx": "^4.20.6"
 	}
 }
