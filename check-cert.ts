@@ -10,10 +10,10 @@ const minRemainingDays = Number.parseInt(process.argv[3], 10) || undefined;
 
 void checkCert(hostname, minRemainingDays)
 	.then((result: string) => {
-		console.log(`${hostname}: ${result}`);
+		console.log(result);
 	})
 	.catch((error: unknown) => {
 		const message = error instanceof Error ? error.message : 'Unknown error';
-		console.error(`${hostname}: No valid certificate found (${message})`);
+		console.error(`No valid certificate found (${message})`);
 		process.exit(1);
 	});
