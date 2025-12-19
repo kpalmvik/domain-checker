@@ -40,4 +40,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: ${{ matrix.site.domain }} certificate check
-        run: npm run check-cert ${{ matrix.site.domain }} ${{ matrix.site.days }}
+        run: |
+          if OUTPUT=$(npm run --silent check-cert ${{ matrix.site.domain }} ${{ matrix.site.days }} 2>&1); then
+            echo "- ✅ $OUTPUT" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- ❌ ${{ matrix.site.domain }}: $OUTPUT" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
