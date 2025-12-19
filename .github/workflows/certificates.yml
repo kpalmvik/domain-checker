@@ -9,6 +9,20 @@ on:
 jobs:
   certificates:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        site:
+          - domain: kristofer.palmvik.se
+            days: 25
+          - domain: www.hemnet.se
+            days: 25
+          - domain: www.google.com
+            days: 10
+          - domain: www.sydsvenskan.se
+            days: 25
+          - domain: www.testfreaks.com
+            days: 15
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -17,13 +31,5 @@ jobs:
           node-version: latest
       - name: Install dependencies
         run: npm ci
-      - name: kristofer.palmvik.se
-        run: npm run check-cert kristofer.palmvik.se 25
-      - name: www.hemnet.se
-        run: npm run check-cert www.hemnet.se 25
-      - name: www.google.com
-        run: npm run check-cert www.google.com 10
-      - name: www.sydsvenskan.se
-        run: npm run check-cert www.sydsvenskan.se 25
-      - name: www.testfreaks.com
-        run: npm run check-cert www.testfreaks.com 15
+      - name: Check ${{ matrix.site.domain }}
+        run: npm run check-cert ${{ matrix.site.domain }} ${{ matrix.site.days }}
