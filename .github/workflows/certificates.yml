@@ -23,6 +23,14 @@ jobs:
             days: 25
           - domain: www.testfreaks.com
             days: 15
+          - domain: www.na.se
+            days: 25
+          - domain: www.positiongreen.com
+            days: 25
+          - domain: trustvoice.com
+            days: 25
+          - domain: univid.io
+            days: 25
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
