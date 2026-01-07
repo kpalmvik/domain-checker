@@ -2,7 +2,7 @@
 	"name": "domain-checker",
 	"version": "1.0.0",
 	"description": "Check registration and certificate expiration of domains",
-	"main": "index.ts",
+	"main": "check-cert.ts",
 	"scripts": {
 		"check-cert": "tsx check-cert.ts",
 		"check-domain-expiration": "tsx check-domain-expiration.ts",
