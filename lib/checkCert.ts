@@ -18,6 +18,7 @@ const getCertificateValidTo = async (hostname: string): Promise<string> =>
 
 			if (!validTo) {
 				reject(new Error('No valid_to date found in certificate'));
+				return;
 			}
 
 			socketStream.destroy();
