@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        site:
+        sites:
           - domain: kristofer.palmvik.se
             days: 25
           - domain: www.hemnet.se
@@ -39,11 +39,11 @@ jobs:
           node-version: latest
       - name: Install dependencies
         run: npm ci
-      - name: ${{ matrix.site.domain }} certificate check
+      - name: ${{ matrix.sites.domain }} certificate check
         run: |
-          if OUTPUT=$(npm run --silent check-cert ${{ matrix.site.domain }} ${{ matrix.site.days }} 2>&1); then
+          if OUTPUT=$(npm run --silent check-cert ${{ matrix.sites.domain }} ${{ matrix.sites.days }} 2>&1); then
             echo "- ✅ $OUTPUT" >> $GITHUB_STEP_SUMMARY
           else
-            echo "- ❌ ${{ matrix.site.domain }}: $OUTPUT" >> $GITHUB_STEP_SUMMARY
+            echo "- ❌ ${{ matrix.sites.domain }}: $OUTPUT" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
