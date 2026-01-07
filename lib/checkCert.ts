@@ -44,7 +44,7 @@ const checkCert = async (
 		);
 	}
 
-	return `${hostname} is valid for ${remainingDays.toString()} days`;
+	return `${hostname} is valid for ${remainingDays.toString()} days (until ${certValidTo}), which meets the requirement of ${(minRemainingDays ?? 0).toString()} days.`;
 };
 
 export {checkCert};
