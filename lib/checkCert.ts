@@ -1,14 +1,16 @@
 import tls from 'tls';
 
 const millisecondsPerDay = 1000 * 60 * 60 * 24;
+const connectionTimeoutMs = 3000;
+const sslPort = 443;
 
 const getCertificateValidTo = async (hostname: string): Promise<string> =>
 	new Promise((resolve, reject) => {
 		const socketStream = tls.connect({
 			host: hostname,
 			servername: hostname,
-			port: 443,
-			timeout: 3000,
+			port: sslPort,
+			timeout: connectionTimeoutMs,
 		});
 
 		socketStream.once('secureConnect', () => {
