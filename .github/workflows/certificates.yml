@@ -11,6 +11,7 @@ on:
 
 jobs:
   certificates:
+    name: 'Check if ${{ matrix.sites.domain }} expires within ${{ matrix.sites.days }} days)'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
