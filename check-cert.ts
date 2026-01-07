@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import {checkCert} from './lib/checkCert';
 
 if (process.argv.length === 2 || !process.argv[2]) {
