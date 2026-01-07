@@ -5,13 +5,10 @@ This project provides tools to monitor domain name registrations and SSL/TLS cer
 Currently, the project offers the following features:
 
 - **SSL/TLS Certificate Expiration Check:** Automated daily checks of SSL/TLS certificates for a configurable list of hostnames. This is integrated with a GitHub Actions workflow for continuous monitoring.
-- **Domain Registration Expiration Check:** (Coming Soon) Functionality to check the expiration dates of domain name registrations.
 
-Check registration and certificate expiration of domains
+In the future, it might also offer:
 
-## Domain registration
-
-This functionality is currently under development. Once implemented, it will allow you to check the expiration dates of your domain name registrations, helping you avoid accidental domain loss.
+- **Domain Registration Expiration Check:** Functionality to check the expiration dates of domain name registrations.
 
 ## SSL/TLS Certificate Expiration Check
 
