@@ -1,12 +1,14 @@
 import {checkCert} from './lib/checkCert';
 
-if (process.argv.length === 2) {
+if (process.argv.length === 2 || !process.argv[2]) {
 	console.error('Usage: npm run check-cert some.example.com [minimum-days]');
 	process.exit(1);
 }
 
 const hostname = process.argv[2];
-const minRemainingDays = Number.parseInt(process.argv[3], 10) || undefined;
+const minRemainingDays = process.argv[3]
+	? Number.parseInt(process.argv[3], 10)
+	: undefined;
 
 void checkCert(hostname, minRemainingDays)
 	.then((result: string) => {
