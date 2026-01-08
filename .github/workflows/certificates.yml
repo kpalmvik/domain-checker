@@ -51,8 +51,8 @@ jobs:
             echo "- ❌ ${{ matrix.sites.domain }}: $OUTPUT" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
-          env:
-            OTEL_SERVICE_NAME: 'domain-checker'
-            OTEL_EXPORTER_OTLP_PROTOCOL: 'http/protobuf'
-            OTEL_EXPORTER_OTLP_ENDPOINT: 'https://api.honeycomb.io'
-            OTEL_EXPORTER_OTLP_HEADERS: 'x-honeycomb-team=${{secrets.HONEYCOMB_API_KEY}}'
+        env:
+          OTEL_SERVICE_NAME: 'domain-checker'
+          OTEL_EXPORTER_OTLP_PROTOCOL: 'http/protobuf'
+          OTEL_EXPORTER_OTLP_ENDPOINT: 'https://api.honeycomb.io'
+          OTEL_EXPORTER_OTLP_HEADERS: 'x-honeycomb-team=${{secrets.HONEYCOMB_API_KEY}}'
