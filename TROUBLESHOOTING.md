@@ -7,6 +7,22 @@ Tests are failing on the `main` branch with the error:
 unable to get local issuer certificate
 ```
 
+## Critical Finding: No Mocking in Tests! ⚠️
+
+**The tests are making REAL network calls to external domains:**
+- `www.example.com`
+- `expired.badssl.com` 
+- `wrong.host.badssl.com`
+- `something.invalid`
+
+The tests use `tls.connect()` to make actual TLS connections. **This makes the tests:**
+- ❌ Flaky (dependent on network conditions)
+- ❌ Unreliable (dependent on external services)
+- ❌ Slow (network latency)
+- ❌ Non-deterministic (certificates can change)
+
+**This is why tests fail intermittently** - they depend on external infrastructure that can change without notice.
+
 ## Root Cause Analysis
 
 ### 1. Node Version Mismatch (Primary Issue)
@@ -64,15 +80,28 @@ This is a **TLS/SSL certificate chain validation error**, not a code error.
 
 ## Recommendations
 
-1. **Fixed:** Update `package.json` to require Node >= 24 (current LTS)
-2. **Monitor:** Watch if the TLS certificate error resolves itself (may be transient)
-3. **Consider:** Use a more reliable test domain or mock certificate responses for unit tests
-4. **Alternative:** Switch to a different domain that's more stable for testing (e.g., google.com, github.com)
+### Immediate Fixes (Completed)
+1. ✅ **Fixed:** Update `package.json` to require Node >= 24 (current LTS)
+
+### Urgent: Fix Test Reliability
+2. **🔴 HIGH PRIORITY:** Mock TLS connections in unit tests
+   - Tests should NOT make real network calls
+   - Mock `tls.connect()` to return predictable certificate data
+   - This will make tests:
+     - Fast (no network latency)
+     - Reliable (no external dependencies)
+     - Deterministic (consistent results)
+
+### Alternative Approaches
+3. **Integration Tests:** Move real network tests to a separate integration test suite
+4. **Monitor:** If keeping real calls, monitor for transient failures and retry logic
 
 ## Related Issues
 
-- The Node version mismatch is DEFINITELY related to the failing CI pipeline
-- The TLS certificate error MIGHT NOT be related to code changes - could be environmental
+- ✅ The Node version mismatch is DEFINITELY related to the failing CI pipeline
+- ✅ **The TLS certificate error is caused by making real network calls in unit tests**
+- The error is NOT related to code changes - it's environmental/network-dependent
+- Tests are flaky by design (no mocking)
 
 ## Verification
 
