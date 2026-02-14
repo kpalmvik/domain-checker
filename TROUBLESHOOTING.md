@@ -103,9 +103,52 @@ This is a **TLS/SSL certificate chain validation error**, not a code error.
 - The error is NOT related to code changes - it's environmental/network-dependent
 - Tests are flaky by design (no mocking)
 
+## Network Connectivity Testing (Feb 14, 2026)
+
+### Test Results
+After firewall was reported as opened, extensive testing was performed:
+
+**DNS Resolution:**
+```bash
+$ nslookup www.example.com 8.8.8.8
+** server can't find www.example.com: REFUSED
+```
+
+**TLS Connection (by IP):**
+```bash
+$ node test-tls.js
+TLS connection to 93.184.216.34:443 - timeout
+```
+
+**Port Connectivity:**
+```bash
+$ nc -zv 93.184.216.34 443
+Connection timeout
+```
+
+### Findings
+- DNS queries return **REFUSED** (both local and Google DNS)
+- Direct TLS connections to IP addresses **timeout**
+- Port 443 connections **timeout**
+- All test domains unreachable: www.example.com, expired.badssl.com
+
+### Network Requirements for Tests
+The test suite requires:
+1. **DNS resolution** (UDP port 53 outbound)
+2. **TLS connections** (TCP port 443 outbound)
+3. **Access to domains:**
+   - www.example.com
+   - expired.badssl.com
+   - wrong.host.badssl.com
+
+### Recommendations
+1. **For CI environment:** Verify outbound traffic on ports 53 (DNS) and 443 (HTTPS)
+2. **For production:** Mock TLS connections to avoid network dependencies
+3. **Alternative:** Run integration tests separately from unit tests
+
 ## Verification
 
 After fixing the Node version requirement, the CI should:
-1. No longer show engine warnings
-2. Run on the correct Node version
-3. May still fail if the TLS certificate issue persists (requires separate investigation)
+1. ✅ No longer show engine warnings
+2. ✅ Run on the correct Node version (24.x)
+3. ⚠️ Tests will still fail without proper network access to external domains
