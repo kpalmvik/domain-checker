@@ -3,7 +3,7 @@ import {checkCert} from './checkCert';
 describe('checkCert', () => {
 	it('returns the number of days the SSL certificate is valid', async () => {
 		const certStatus = await checkCert('www.google.com');
-		expect(certStatus).toMatch(/www.google.com is valid for [0-9]{1,4} days/);
+		expect(certStatus).toMatch(/www\.google\.com is valid for [0-9]{1,4} days/);
 	});
 
 	it('throws an error if the certificate expires in less than a given number of days', async () => {
