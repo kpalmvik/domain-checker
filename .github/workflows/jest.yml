@@ -3,6 +3,9 @@ name: Test 🥽
 on:
   - push
 
+permissions:
+  contents: read
+
 jobs:
   jest:
     runs-on: ubuntu-latest
