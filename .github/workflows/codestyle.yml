@@ -3,6 +3,9 @@ name: Code style 🏗
 on:
   - push
 
+permissions:
+  contents: read
+
 jobs:
   codestyle:
     runs-on: ubuntu-latest

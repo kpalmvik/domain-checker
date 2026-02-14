@@ -9,6 +9,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   certificates:
     name: '${{ matrix.sites.domain }} certificate is valid more than ${{ matrix.sites.days }} days'
