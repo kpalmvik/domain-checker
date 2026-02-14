@@ -2,12 +2,12 @@ import {checkCert} from './checkCert';
 
 describe('checkCert', () => {
 	it('returns the number of days the SSL certificate is valid', async () => {
-		const certStatus = await checkCert('www.example.com');
-		expect(certStatus).toMatch(/www.example.com is valid for [0-9]{1,4} days/);
+		const certStatus = await checkCert('www.google.com');
+		expect(certStatus).toMatch(/www.google.com is valid for [0-9]{1,4} days/);
 	});
 
 	it('throws an error if the certificate expires in less than a given number of days', async () => {
-		await expect(checkCert('www.example.com', 9999)).rejects.toThrow();
+		await expect(checkCert('www.google.com', 9999)).rejects.toThrow();
 	});
 
 	it('throws an error for a hostname with an expired certificate', async () => {
