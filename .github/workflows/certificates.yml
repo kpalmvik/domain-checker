@@ -48,12 +48,19 @@ jobs:
         run: npm ci
       - name: ${{ matrix.sites.domain }} certificate check
         run: |
-          if OUTPUT=$(npm run --silent check-cert ${{ matrix.sites.domain }} ${{ matrix.sites.days }} 2>&1); then
-            echo "- ✅ $OUTPUT" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "- ❌ ${{ matrix.sites.domain }}: $OUTPUT" >> $GITHUB_STEP_SUMMARY
-            exit 1
-          fi
+          for attempt in 1 2 3; do
+            if OUTPUT=$(npm run --silent check-cert ${{ matrix.sites.domain }} ${{ matrix.sites.days }} 2>&1); then
+              echo "- ✅ $OUTPUT" >> $GITHUB_STEP_SUMMARY
+              exit 0
+            else
+              echo "Attempt $attempt failed: $OUTPUT"
+              if [ $attempt -lt 3 ]; then
+                sleep 10
+              fi
+            fi
+          done
+          echo "- ❌ ${{ matrix.sites.domain }}: $OUTPUT" >> $GITHUB_STEP_SUMMARY
+          exit 1
         env:
           OTEL_SERVICE_NAME: domain-checker
           OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
