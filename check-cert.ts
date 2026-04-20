@@ -23,6 +23,12 @@ void checkCert(hostname, minRemainingDays)
 		const message = error instanceof Error ? error.message : 'Unknown error';
 		console.error(`No valid certificate found (${message})`);
 
+		const isNetworkError =
+			error instanceof Error &&
+			/^(ETIMEDOUT|ECONNREFUSED|ENOTFOUND|EHOSTUNREACH|ENETUNREACH)/.test(
+				(error as NodeJS.ErrnoException).code ?? '',
+			);
+
 		await handleShutdown();
-		process.exit(1);
+		process.exit(isNetworkError ? 0 : 1);
 	});
