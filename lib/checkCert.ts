@@ -20,7 +20,7 @@ const getCertificateValidTo = async (hostname: string): Promise<string> => {
 			const {valid_to: validTo} = socketStream.getPeerCertificate(false);
 
 			if (!validTo) {
-				reject(new Error('No valid_to date found in certificate'));
+				reject(new Error(`No valid_to date found in certificate for ${hostname}`));
 				return;
 			}
 
@@ -30,7 +30,10 @@ const getCertificateValidTo = async (hostname: string): Promise<string> => {
 		});
 
 		socketStream.on('error', error => {
-			reject(error);
+			const enrichedError = new Error(
+				`Failed to retrieve certificate for ${hostname}: ${error instanceof Error ? error.message : String(error)}`,
+			);
+			reject(enrichedError);
 		});
 	});
 };
@@ -56,7 +59,7 @@ const checkCert = async (
 
 		if (minRemainingDays && remainingDays <= minRemainingDays) {
 			const error = new Error(
-				`Valid only for ${remainingDays.toString()} days, which is less than the required ${minRemainingDays.toString()}`,
+				`Certificate for ${hostname}: Valid only for ${remainingDays.toString()} days, which is less than the required ${minRemainingDays.toString()} days`,
 			);
 			span.recordException(error);
 			span.end();
@@ -66,6 +69,8 @@ const checkCert = async (
 		span.end();
 		return `${hostname} is valid for ${remainingDays.toString()} days (until ${certValidTo}), which meets the requirement of ${(minRemainingDays ?? 0).toString()} days.`;
 	} catch (error) {
+		span.setAttribute('error.occurred', true);
+		span.setAttribute('error.hostname', hostname);
 		if (error instanceof Error) {
 			span.recordException(error);
 		}

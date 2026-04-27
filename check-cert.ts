@@ -21,7 +21,7 @@ void checkCert(hostname, minRemainingDays)
 	})
 	.catch(async (error: unknown) => {
 		const message = error instanceof Error ? error.message : 'Unknown error';
-		console.error(`No valid certificate found (${message})`);
+		console.error(`No valid certificate found for ${hostname} (${message})`);
 
 		const isNetworkError =
 			error instanceof Error &&
