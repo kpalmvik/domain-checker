@@ -20,7 +20,9 @@ const getCertificateValidTo = async (hostname: string): Promise<string> => {
 			const {valid_to: validTo} = socketStream.getPeerCertificate(false);
 
 			if (!validTo) {
-				reject(new Error(`No valid_to date found in certificate for ${hostname}`));
+				reject(
+					new Error(`No valid_to date found in certificate for ${hostname}`),
+				);
 				return;
 			}
 
