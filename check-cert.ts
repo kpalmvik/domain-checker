@@ -30,5 +30,7 @@ void checkCert(hostname, minRemainingDays)
 			);
 
 		await handleShutdown();
+		// Give tracing time to export before exiting
+		await new Promise(resolve => setTimeout(resolve, 100));
 		process.exit(isNetworkError ? 0 : 1);
 	});
