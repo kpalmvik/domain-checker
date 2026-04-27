@@ -34,8 +34,6 @@ jobs:
             days: 25
           - domain: www.positiongreen.com
             days: 25
-          - domain: trustvoice.com
-            days: 25
           - domain: univid.io
             days: 25
     steps:
