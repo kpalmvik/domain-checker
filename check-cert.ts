@@ -1,12 +1,12 @@
-import "dotenv/config";
-import { handleShutdown, initializeTracing } from "./tracing";
+import 'dotenv/config';
+import {handleShutdown, initializeTracing} from './tracing';
 
 const main = async () => {
 	initializeTracing();
-	const { checkCert } = await import("./lib/checkCert");
+	const {checkCert} = await import('./lib/checkCert');
 
 	if (process.argv.length === 2 || !process.argv[2]) {
-		console.error("Usage: npm run check-cert some.example.com [minimum-days]");
+		console.error('Usage: npm run check-cert some.example.com [minimum-days]');
 		process.exit(1);
 	}
 
@@ -21,18 +21,18 @@ const main = async () => {
 			await handleShutdown();
 		})
 		.catch(async (error: unknown) => {
-			const message = error instanceof Error ? error.message : "Unknown error";
+			const message = error instanceof Error ? error.message : 'Unknown error';
 			console.error(`No valid certificate found for ${hostname} (${message})`);
 
 			const isNetworkError =
 				error instanceof Error &&
 				/^(ETIMEDOUT|ECONNREFUSED|ENOTFOUND|EHOSTUNREACH|ENETUNREACH)/.test(
-					(error as NodeJS.ErrnoException).code ?? "",
+					(error as NodeJS.ErrnoException).code ?? '',
 				);
 
 			await handleShutdown();
 			// Give tracing time to export before exiting
-			await new Promise((resolve) => setTimeout(resolve, 100));
+			await new Promise(resolve => setTimeout(resolve, 100));
 			process.exit(isNetworkError ? 0 : 1);
 		});
 };

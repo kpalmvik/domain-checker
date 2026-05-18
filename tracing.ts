@@ -1,7 +1,7 @@
-import { OTLPMetricExporter } from "@opentelemetry/exporter-metrics-otlp-http";
-import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
-import { PeriodicExportingMetricReader } from "@opentelemetry/sdk-metrics";
-import { NodeSDK } from "@opentelemetry/sdk-node";
+import {OTLPMetricExporter} from '@opentelemetry/exporter-metrics-otlp-http';
+import {OTLPTraceExporter} from '@opentelemetry/exporter-trace-otlp-http';
+import {PeriodicExportingMetricReader} from '@opentelemetry/sdk-metrics';
+import {NodeSDK} from '@opentelemetry/sdk-node';
 
 // import {SimpleSpanProcessor} from '@opentelemetry/sdk-trace-base';
 // import {ConsoleSpanExporter} from '@opentelemetry/sdk-trace-node';
@@ -29,4 +29,4 @@ const initializeTracing = (): void => {
 	sdkStarted = true;
 };
 
-export { handleShutdown, initializeTracing };
+export {handleShutdown, initializeTracing};
