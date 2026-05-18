@@ -1,36 +1,40 @@
-import 'dotenv/config';
-import {checkCert} from './lib/checkCert';
-import {initializeTracing, handleShutdown} from './tracing';
+import "dotenv/config";
+import { handleShutdown, initializeTracing } from "./tracing";
 
-initializeTracing();
+const main = async () => {
+	initializeTracing();
+	const { checkCert } = await import("./lib/checkCert");
 
-if (process.argv.length === 2 || !process.argv[2]) {
-	console.error('Usage: npm run check-cert some.example.com [minimum-days]');
-	process.exit(1);
-}
+	if (process.argv.length === 2 || !process.argv[2]) {
+		console.error("Usage: npm run check-cert some.example.com [minimum-days]");
+		process.exit(1);
+	}
 
-const hostname = process.argv[2];
-const minRemainingDays = process.argv[3]
-	? Number.parseInt(process.argv[3], 10)
-	: undefined;
+	const hostname = process.argv[2];
+	const minRemainingDays = process.argv[3]
+		? Number.parseInt(process.argv[3], 10)
+		: undefined;
 
-void checkCert(hostname, minRemainingDays)
-	.then(async (result: string) => {
-		console.log(result);
-		await handleShutdown();
-	})
-	.catch(async (error: unknown) => {
-		const message = error instanceof Error ? error.message : 'Unknown error';
-		console.error(`No valid certificate found for ${hostname} (${message})`);
+	void checkCert(hostname, minRemainingDays)
+		.then(async (result: string) => {
+			console.log(result);
+			await handleShutdown();
+		})
+		.catch(async (error: unknown) => {
+			const message = error instanceof Error ? error.message : "Unknown error";
+			console.error(`No valid certificate found for ${hostname} (${message})`);
 
-		const isNetworkError =
-			error instanceof Error &&
-			/^(ETIMEDOUT|ECONNREFUSED|ENOTFOUND|EHOSTUNREACH|ENETUNREACH)/.test(
-				(error as NodeJS.ErrnoException).code ?? '',
-			);
+			const isNetworkError =
+				error instanceof Error &&
+				/^(ETIMEDOUT|ECONNREFUSED|ENOTFOUND|EHOSTUNREACH|ENETUNREACH)/.test(
+					(error as NodeJS.ErrnoException).code ?? "",
+				);
 
-		await handleShutdown();
-		// Give tracing time to export before exiting
-		await new Promise(resolve => setTimeout(resolve, 100));
-		process.exit(isNetworkError ? 0 : 1);
-	});
+			await handleShutdown();
+			// Give tracing time to export before exiting
+			await new Promise((resolve) => setTimeout(resolve, 100));
+			process.exit(isNetworkError ? 0 : 1);
+		});
+};
+
+void main();
