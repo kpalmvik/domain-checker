@@ -1,0 +1,88 @@
+name: Instabee Certificates check 🔐
+
+on:
+  schedule:
+    - cron: '0 3 * * 1' # Runs every Monday at 03:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  certificates:
+    name: '${{ matrix.sites.domain }} certificate is valid more than ${{ matrix.sites.days }} days'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sites:
+          - domain: budbee.be
+            days: 25
+          - domain: budbee.com
+            days: 25
+          - domain: budbee.de
+            days: 25
+          - domain: budbee.dk
+            days: 25
+          - domain: budbee.fi
+            days: 25
+          - domain: budbee.io
+            days: 25
+          - domain: budbee.nl
+            days: 25
+          - domain: budbee.no
+            days: 25
+          - domain: budbee.se
+            days: 25
+          - domain: instabee.com
+            days: 25
+          - domain: instabee.se
+            days: 25
+          - domain: instabox.com
+            days: 25
+          - domain: instabox.de
+            days: 25
+          - domain: instabox.dk
+            days: 25
+          - domain: instabox.fi
+            days: 25
+          - domain: instabox.io
+            days: 25
+          - domain: instabox.nl
+            days: 25
+          - domain: instabox.no
+            days: 25
+          - domain: instabox.se
+            days: 25
+          - domain: porterbuddy.com
+            days: 25
+          - domain: porterbuddy.no
+            days: 25
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          cache: 'npm'
+          node-version: lts/*
+      - name: Install dependencies
+        run: npm ci
+      - name: ${{ matrix.sites.domain }} certificate check
+        run: |
+          for attempt in 1 2 3; do
+            if OUTPUT=$(npm run --silent check-cert ${{ matrix.sites.domain }} ${{ matrix.sites.days }} 2>&1); then
+              echo "- ✅ $OUTPUT" >> $GITHUB_STEP_SUMMARY
+              exit 0
+            else
+              echo "Attempt $attempt failed: $OUTPUT"
+              if [ $attempt -lt 3 ]; then
+                sleep 10
+              fi
+            fi
+          done
+          echo "- ❌ ${{ matrix.sites.domain }}: $OUTPUT" >> $GITHUB_STEP_SUMMARY
+          exit 1
+        env:
+          OTEL_SERVICE_NAME: domain-checker
+          OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+          OTEL_EXPORTER_OTLP_ENDPOINT: https://api.honeycomb.io
+          OTEL_EXPORTER_OTLP_HEADERS: x-honeycomb-team=${{secrets.HONEYCOMB_API_KEY}}
