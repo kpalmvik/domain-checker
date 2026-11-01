@@ -42,7 +42,7 @@
 		"@opentelemetry/exporter-metrics-otlp-http": "^0.222.0",
 		"@opentelemetry/sdk-metrics": "^2.10.0",
 		"@opentelemetry/sdk-node": "^0.222.0",
-		"dotenv": "^17.4.2",
+		"dotenv": "^18.0.8",
 		"tsx": "^4.23.13"
 	},
 	"engines": {
